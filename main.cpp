@@ -2,7 +2,7 @@
 #include <math.h>
 #define EPS 1.0e-15
 
-double LinearEquation(double b, double c);         // случай линейного уравнения
+int LinearEquation(double b, double c);         // случай линейного уравнения
 double discriminant(double a, double b, double c); // нахождение дискриминанта
 double FirstRoot(double D, double a, double b);    // первый корень
 double SecondRoot(double D, double a, double b);   // второй корень
@@ -40,8 +40,7 @@ int LinearEquation(double b, double c) {
         else if (fabs(b) < EPS)
             printf("Any real number");
         else {
-            x1 = LinearEquation(b, c);
-            printf("The linear equation has the only root: %lf", -с / и);
+            printf("The linear equation has the only root: %lf", -c / b);
         }
     return 0;
 }
