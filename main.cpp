@@ -7,6 +7,7 @@ double FirstRoot(double D, double a, double b);    // первый корень
 double SecondRoot(double D, double a, double b);   // второй корень
 
 int main(void) {
+    const double eps = 1.0e-15;
     double a, b, c;                                // a, b, c - коэффициенты квадратного уравнения вида ax^2 + bx + c = 0
     double D, x1, x2;                              // D - дискриминант уравнения, x1 и x2 - корни
 
@@ -14,10 +15,10 @@ int main(void) {
     printf("Please, type the coefficients: ");
     scanf("%lf %lf %lf", &a, &b, &c);
 
-    if (a == 0) {
-        if (b == 0 && c != 0)
+    if (fabs(a) < eps) {
+        if (fabs(b) < eps && fabs(c) >= eps)
             printf("Cannot be solved");
-        else if (b == 0)
+        else if (fabs(b) < eps)
             printf("Any real number");
         else {
             x1 = LinearEquation(b, c);
@@ -28,7 +29,7 @@ int main(void) {
 
     D = discriminant(a, b, c);
     if (D < 0) printf("Cannot be solved for real numbers.");
-    else if (D == 0) {
+    else if (D < eps) {
         x1 = FirstRoot(D, a, b);
         printf("The only root is %lf", x1);
     }
