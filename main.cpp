@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#define EPS 1.0e-15
 
 double LinearEquation(double b, double c);         // случай линейного уравнения
 double discriminant(double a, double b, double c); // нахождение дискриминанта
@@ -7,7 +8,6 @@ double FirstRoot(double D, double a, double b);    // первый корень
 double SecondRoot(double D, double a, double b);   // второй корень
 
 int main(void) {
-    const double eps = 1.0e-15;
     double a, b, c;                                // a, b, c - коэффициенты квадратного уравнения вида ax^2 + bx + c = 0
     double D, x1, x2;                              // D - дискриминант уравнения, x1 и x2 - корни
 
@@ -15,21 +15,14 @@ int main(void) {
     printf("Please, type the coefficients: ");
     scanf("%lf %lf %lf", &a, &b, &c);
 
-    if (fabs(a) < eps) {
-        if (fabs(b) < eps && fabs(c) >= eps)
-            printf("Cannot be solved");
-        else if (fabs(b) < eps)
-            printf("Any real number");
-        else {
-            x1 = LinearEquation(b, c);
-            printf("The linear equation has the only root: %lf", x1);
-        }
+    if (fabs(a) < EPS) {                           // случай линейного уравнения
+        LinearEquation(b, c);
         return 0;
     }
 
     D = discriminant(a, b, c);
     if (D < 0) printf("Cannot be solved for real numbers.");
-    else if (D < eps) {
+    else if (D < EPS) {
         x1 = FirstRoot(D, a, b);
         printf("The only root is %lf", x1);
     }
@@ -41,8 +34,16 @@ int main(void) {
     return 0;
 }
 
-double LinearEquation(double b, double c) {
-    return -c / b;
+int LinearEquation(double b, double c) {
+    if (fabs(b) < EPS && fabs(c) >= EPS)
+            printf("Cannot be solved");
+        else if (fabs(b) < EPS)
+            printf("Any real number");
+        else {
+            x1 = LinearEquation(b, c);
+            printf("The linear equation has the only root: %lf", -с / и);
+        }
+    return 0;
 }
 
 double discriminant(double a, double b, double c) {
