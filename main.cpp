@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#define EPS 1.0e-15
+#define EPS 1.0e-9
 
 int LinearEquation(double b, double c);                                        // случай линейного уравнения
 int QuadraticEquation(double a, double b, double c, double* x1, double* x2);   // случай квадратного уравнения
