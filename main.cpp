@@ -47,19 +47,23 @@ double SecondRoot(double D, double a, double b) {
 }
 
 int LinearEquation(double b, double c) {
-    if (fabs(b) < EPS && fabs(c) >= EPS)
+    if (fabs(b) < EPS && fabs(c) >= EPS) {
             printf("Cannot be solved");
-        else if (fabs(b) < EPS)
-            printf("Any real number");
-        else {
-            printf("The linear equation has the only root: %lf", -c / b);
-        }
+    }
+    else if (fabs(b) < EPS) {
+        printf("Any real number");
+    }
+    else {
+        printf("The linear equation has the only root: %lf", -c / b);
+    }
     return 0;
 }
 
 int QuadraticEquation(double a, double b, double c, double* x1, double* x2){
     double D = discriminant(a, b, c);
-    if (D < 0) return 0;
+    if (D < 0) {
+        return 0;
+    }
     else if (D < EPS) {
         *x1 = - b / (2 * a);
         return 1;
@@ -79,11 +83,14 @@ int input(double* a, double* b, double* c) {
 }
 
 void output(int NumberOfRoots, double x1, double x2) {
-    if (NumberOfRoots == 0)
+    if (NumberOfRoots == 0) {
         printf("Cannot be solved for real numbers");
-    else if (NumberOfRoots == 1)
+    }
+    else if (NumberOfRoots == 1) {
         printf("The only root is %lf", x1);
-    else
+    }
+    else {
         printf("The quadratic equation has two roots:\nx1 = %lf and x2 = %lf", x1, x2);
+    }
     return;
 }
