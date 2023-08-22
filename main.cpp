@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
-#include <iostream>
 
 const double EPS = 1.0e-9;
 
-enum class TypeOfRoots
+enum TypeOfRoots
 {
     SS_NO_ROOTS = 0,
     SS_ONE_ROOT = 1,
@@ -19,6 +18,7 @@ double FindDiscriminant(double a, double b, double c);                          
 double FindFirstRoot(double sqrt_D, double a, double b);                                    // first root
 double FindSecondRoot(double sqrt_D, double a, double b);                                   // second root
 bool GetInput(double* a, double* b, double* c);                                             // input coefficients
+bool CompareEquality(const double a, const double b);
 void PrintOutput(TypeOfRoots number_of_roots, double x1, double x2);                        // output roots
 
 int main(int argc, char** argv)
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    if (fabs(a) < EPS)                                                                      // linear equation case
+    if (CompareEquality(a, 0))                                                                      // linear equation case
     {
         number_of_roots = SolveLinearEquation(b, c, &x1);
     }
@@ -67,17 +67,18 @@ TypeOfRoots SolveLinearEquation(double b, double c, double* x1)
 {
     assert(x1 != NULL);
 
-    if (fabs(b) < EPS && fabs(c) >= EPS)                                       // no roots
+    if (CompareEquality(b, 0) && !CompareEquality(c, 0))                                       // no roots
     {
         return TypeOfRoots::SS_NO_ROOTS;
     }
-    else if (fabs(b) < EPS)                                                    // inf roots
+    else if (CompareEquality(b, 0))                                                    // inf roots
     {
         return TypeOfRoots::SS_INF_ROOTS;
     }
     else                                                                       // one root
     {
         *x1 = - c / b;
+        assert(isfinite(*x1));
         return TypeOfRoots::SS_ONE_ROOT;
     }
 }
@@ -93,7 +94,7 @@ TypeOfRoots SolveQuadraticEquation(double a, double b, double c, double* x1, dou
     {
         return TypeOfRoots::SS_NO_ROOTS;
     }
-    else if (D < EPS)                                                          // one root
+    else if (CompareEquality(D, 0))                                                          // one root
     {
         *x1 = - b / (2 * a);
         return TypeOfRoots::SS_ONE_ROOT;
@@ -105,6 +106,12 @@ TypeOfRoots SolveQuadraticEquation(double a, double b, double c, double* x1, dou
         *x2 = FindSecondRoot(sqrt_D, a, b);
         return TypeOfRoots::SS_TWO_ROOTS;
     }
+}
+
+bool CompareEquality(const double a, const double b)
+{
+    if (fabs(a - b) < EPS) return true;
+    return false;
 }
 
 bool GetInput(double* a, double* b, double* c)
@@ -120,9 +127,9 @@ bool GetInput(double* a, double* b, double* c)
     if (scanf("%lf", b) != 1) return false;
     if (scanf("%lf", c) != 1) return false;
 
-    assert(std::isfinite(*a));
-    assert(std::isfinite(*b));
-    assert(std::isfinite(*c));
+    assert(isfinite(*a));
+    assert(isfinite(*b));
+    assert(isfinite(*c));
 
     assert(!isnan(*a));
     assert(!isnan(*b));
