@@ -1,8 +1,6 @@
 #include "quadratic_equation.h"
 
-/*
-    TODO: inline CompareDoubles(), FindDiscriminant() and case functions
-*/
+
 
 //-----------------------------------------------------------------------------
 // Doubles comparison
@@ -30,7 +28,7 @@ doubles_cmp_status;
  *
  * @retval Status @see doubles_cmp_status
  */
-static doubles_cmp_status
+static inline doubles_cmp_status
 CompareDoubles (const double a,
                 const double b);
 
@@ -119,7 +117,7 @@ FindRoots (const quadratic_equation_coefs* const coefs);
  * @details Initializes fields with:
  * x1 = NaN, x2 = NaN, roots_number = QUADRATIC_EQUATION_NO_ROOTS
  */
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 BothCasesNoRoots (void);
 
 
@@ -152,7 +150,7 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs);
  *
  * @retval Discriminant value
  */
-static double
+static inline double
 FindDiscriminant (const quadratic_equation_coefs* const coefs);
 
 
@@ -166,7 +164,7 @@ FindDiscriminant (const quadratic_equation_coefs* const coefs);
  * and initializes fields with:
  * x1 = value, x2 = NaN, roots_number = QUADRATIC_EQUATION_ONE_ROOT
  */
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs);
 
 
@@ -180,7 +178,7 @@ QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs);
  * and initializes fields with:
  * x1 = value1, x2 = value2, roots_number = QUADRATIC_EQUATION_TWO_ROOTS
  */
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
                        const double discriminant);
 //-------------------------------------
@@ -216,7 +214,7 @@ SolveLinearCase (const quadratic_equation_coefs* const coefs);
  * @details Initializes fields with:
  * x1 = NaN, x2 = NaN, roots_number = QUADRATIC_EQUATION_INF_ROOTS
  */
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 LinearCaseInfRoots (void);
 
 
@@ -230,7 +228,7 @@ LinearCaseInfRoots (void);
  * and initializes fields with:
  * x1 = value, x2 = NaN, roots_number = QUADRATIC_EQUATION_ONE_ROOT
  */
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 LinearCaseOneRoot (const quadratic_equation_coefs* const coefs);
 //-------------------------------------
 
@@ -362,7 +360,7 @@ FindRoots (const quadratic_equation_coefs* const coefs)
 }
 
 
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 BothCasesNoRoots (void)
 {
     return RootsConstructor (NAN, NAN, QUADRATIC_EQUATION_NO_ROOTS);
@@ -396,14 +394,14 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs)
 }
 
 
-static double
+static inline double
 FindDiscriminant (const quadratic_equation_coefs* const coefs)
 {
     return coefs->b * coefs->b - 4 * coefs->a * coefs->c;
 }
 
 
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs)
 {
     const double x1_root = -coefs->b / 2 / coefs->a;
@@ -411,7 +409,7 @@ QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs)
 }
 
 
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
                        const double discriminant)
 {
@@ -442,14 +440,14 @@ SolveLinearCase (const quadratic_equation_coefs* const coefs)
 }
 
 
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 LinearCaseInfRoots (void)
 {
     return RootsConstructor (NAN, NAN, QUADRATIC_EQUATION_INF_ROOTS);
 }
 
 
-static quadratic_equation_roots*
+static inline quadratic_equation_roots*
 LinearCaseOneRoot (const quadratic_equation_coefs* const coefs)
 {
     const double x1_root = -coefs->c / coefs->b;
@@ -466,7 +464,7 @@ LinearCaseOneRoot (const quadratic_equation_coefs* const coefs)
 // Doubles comparison implementation
 //-----------------------------------------------------------------------------
 
-static doubles_cmp_status
+static inline doubles_cmp_status
 CompareDoubles (const double a,
                 const double b)
 {
