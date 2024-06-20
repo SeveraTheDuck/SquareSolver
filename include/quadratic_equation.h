@@ -72,21 +72,6 @@ quadratic_equation;
 //-----------------------------------------------------------------------------
 
 /**
- * @brief Reads three coefficients from stdin
- *
- * @retval Pointer to the struct with the coefficients
- * @retval NULL if allocation error occured
- * @retval NULL if bad input  error occured (wrong coefficients number)
- *
- * @details Reads the coefficients and allocates memory for
- * quadratic_equations_coefs structure
- * Returns pointer to the structure upon success and NULL upon error
- */
-quadratic_equation_coefs*
-ReadQuadraticEquationCoefs (void);
-
-
-/**
  * @brief Solves the equation with given coefficients
  *
  * @param coefs Pointer to the struct with the coefficients
@@ -103,18 +88,6 @@ ReadQuadraticEquationCoefs (void);
  */
 quadratic_equation*
 SolveQuadraticEquation (quadratic_equation_coefs* const coefs);
-
-
-/**
- * @brief Prints output of quadratic equation
- *
- * @param equation Pointer to the struct with equation
- *
- * @details Prints number of roots and their values (for valid roots)
- * If the equation was not solved, prints error message
- */
-void
-PrintQuadraticEquationRoots (const quadratic_equation* const equation);
 
 
 /**
