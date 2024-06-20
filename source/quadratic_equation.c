@@ -327,8 +327,8 @@ CompareDoubles (const double a,
 {
     if (isnan (a) || isnan (b)) return DOUBLES_CMP_UNDEFINED;
 
-    if (a < b - __DBL_EPSILON__) return DOUBLES_CMP_LESS;
-    if (a > b + __DBL_EPSILON__) return DOUBLES_CMP_GREATER;
+    if (a < b - DBL_EPSILON) return DOUBLES_CMP_LESS;
+    if (a > b + DBL_EPSILON) return DOUBLES_CMP_GREATER;
     return DOUBLES_CMP_EQUAL;
 }
 
