@@ -44,8 +44,9 @@ quadratic_equation_coefs;
 typedef
 struct quadratic_equation_roots
 {
-    double x1;  ///< First  root
-    double x2;  ///< Second root
+    double x1;                                      ///< First  root
+    double x2;                                      ///< Second root
+    quadratic_equation_roots_number roots_number;   ///< Number of roots
 }
 quadratic_equation_roots;
 
@@ -56,9 +57,8 @@ quadratic_equation_roots;
 typedef
 struct quadratic_equation
 {
-    quadratic_equation_coefs* coefs;                ///< Coefficients
-    quadratic_equation_roots* roots;                ///< Roots
-    quadratic_equation_roots_number roots_number;   ///< Number of roots
+    quadratic_equation_coefs* coefs;    ///< Coefficients
+    quadratic_equation_roots* roots;    ///< Roots
 }
 quadratic_equation;
 
