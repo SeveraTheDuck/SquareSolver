@@ -100,7 +100,38 @@ SolveQuadraticEquation (quadratic_equation_coefs* const coefs);
  * @details Destroys the equation, its coefficients and roots structures
  */
 quadratic_equation*
-EndQuadraticEquationSolver (quadratic_equation* const equation);
+QuadraticEquationDestructor (quadratic_equation* const equation);
+
+
+/**
+ * @brief Constructor for the quadratic_equation_coefs structure
+ *
+ * @param a_coef coefficient before x^2
+ * @param b_coef coefficient before x
+ * @param c_coef free coefficient
+ *
+ * @retval pointer to the structure
+ * @retval NULL if allocation error occurred
+ *
+ * @details Allocates memory for the structure and initializes it
+ * with given values
+ */
+quadratic_equation_coefs*
+CoefsConstructor (const double a_coef,
+                  const double b_coef,
+                  const double c_coef);
+
+
+/**
+ * @brief Destructor for the quadratic_equation_coefs structure
+ *
+ * @param coefs Pointer to the structure
+ * @retval NULL
+ *
+ * @details Frees memory
+ */
+quadratic_equation_coefs*
+CoefsDestructor (quadratic_equation_coefs* const coefs);
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
