@@ -6,7 +6,6 @@
 2. [Install guide](#install-guide)
 3. [Usage](#usage)
 4. [Examples](#examples)
-5. [Documentation link](#documentation-link)
 
 ## Short description
 The [repository](https://github.com/SeveraTheDuck/SquareSolver) contains simple quadratic equation solver.
