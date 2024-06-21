@@ -16,9 +16,6 @@ int main (void)
         SolveQuadraticEquation (coefs);
     assert (equation);
 
-    quadratic_equation_roots* roots = equation->roots;
-    assert (roots);
-
     PrintRoots (equation);
 
     equation = QuadraticEquationDestructor (equation);
