@@ -49,7 +49,7 @@ b_coef:
 c_coef:
 2
 Is it your equation? [Y]es [N]o
-1.000000x^2 + 3.000000x + 2.000000
+1.000000x^2 + 3.000000x + 2.000000 = 0
 n
 Please, try again
 Please, enter coefficients:
@@ -60,7 +60,7 @@ b_coef:
 c_coef:
 2
 Is it your equation? [Y]es [N]o
-0.000000x^2 + 1.000000x + 2.000000
+0.000000x^2 + 1.000000x + 2.000000 = 0
 y
 Number of roots: 1
 The only root: -2.000000
