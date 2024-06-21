@@ -66,5 +66,3 @@ y
 Number of roots: 1
 The only root: -2.000000
 ```
-
-## Documentation link
