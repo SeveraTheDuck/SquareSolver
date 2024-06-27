@@ -1,3 +1,17 @@
+/**
+ * @file quadratic_equation.h
+ *
+ * @author SeveraTheDuck
+ *
+ * @brief Header file for quadratic equation solver
+ *
+ * @date 2024-06-27
+ *
+ * @copyright GNU GPL v.3
+ */
+
+
+
 #pragma once
 
 
@@ -8,9 +22,9 @@
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Quadratic equation solver structs and types
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 /**
  * @brief Possible roots number for the quadratic equation
@@ -30,13 +44,14 @@ quadratic_equation_roots_number;
 /**
  * @brief A container for quadratic equation coefficients
  *
- * @details Quadratic equation has this form: ax^2 + bx + c = 0
+ * @details Quadratic equation has this form:
+ * \f$ ax^2 + bx + c = 0 \f$
  */
 typedef
 struct quadratic_equation_coefs
 {
-    double a;   ///< Coefficient before x^2
-    double b;   ///< Coefficient before x
+    double a;   ///< Coefficient before \f$ x^2 \f$
+    double b;   ///< Coefficient before \f$ x \f$
     double c;   ///< Free coefficient
 }
 quadratic_equation_coefs;
@@ -68,14 +83,14 @@ struct quadratic_equation
 }
 quadratic_equation;
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Quadratic equation solver interface
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 /**
  * @brief Solves the equation with given coefficients
@@ -112,9 +127,9 @@ QuadraticEquationDestructor (quadratic_equation* const equation);
 /**
  * @brief Constructor for the quadratic_equation_coefs structure
  *
- * @param a_coef coefficient before x^2
- * @param b_coef coefficient before x
- * @param c_coef free coefficient
+ * @param a_coef Coefficient before \f$ x^2 \f$
+ * @param b_coef Coefficient before \f$ x \f$
+ * @param c_coef Free coefficient
  *
  * @retval pointer to the structure
  * @retval NULL if allocation error occurred
@@ -132,6 +147,7 @@ CoefsConstructor (const double a_coef,
  * @brief Destructor for the quadratic_equation_coefs structure
  *
  * @param coefs Pointer to the structure
+ *
  * @retval NULL
  *
  * @details Frees memory
@@ -139,5 +155,5 @@ CoefsConstructor (const double a_coef,
 quadratic_equation_coefs*
 CoefsDestructor (quadratic_equation_coefs* const coefs);
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

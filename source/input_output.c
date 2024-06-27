@@ -1,11 +1,26 @@
+/**
+ * @file input_output.c
+ *
+ * @author SeveraTheDuck
+ *
+ * @brief Input and output functions implementation
+ *
+ * @date 2024-06-27
+ *
+ * @copyright GNU GPL v.3
+ */
+
+
+
 #include "input_output.h"
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Constants
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
+/// @brief Messages for input
 const char* const INPUT_GREETINGS_MESSAGE = "Please, enter coefficients:";
 const char* const INPUT_A_COEF_MESSAGE    = "a_coef:";
 const char* const INPUT_B_COEF_MESSAGE    = "b_coef:";
@@ -13,8 +28,10 @@ const char* const INPUT_C_COEF_MESSAGE    = "c_coef:";
 const char* const INPUT_CHECK_MESSAGE     = "Is it your equation? [Y]es [N]o";
 const char* const BAD_INPUT_MESSAGE       = "Please, try again";
 
+/// @brief Symbol to read to agree with input
 const unsigned char INPUT_CHECK_SUCCESS = 'Y';
 
+/// @brief Messages for output
 const char* const OUTPUT_NOT_SOLVED_MESSAGE   = "The equation was not solved";
 const char* const OUTPUT_ROOTS_NUMBER_MESSAGE = "Number of roots:";
 const char* const OUTPUT_ONLY_ROOT_MESSAGE    = "The only root:";
@@ -23,6 +40,9 @@ const char* const OUTPUT_SECOND_ROOT_MESSAGE  = "Second root:";
 const char* const OUTPUT_NO_ROOTS_MESSAGE     = "No roots";
 const char* const OUTPUT_INF_ROOTS_MESSAGE    = "Infinite number of roots";
 
+/**
+ * @brief Enumeration for input read status
+ */
 typedef
 enum input_status
 {
@@ -31,52 +51,95 @@ enum input_status
 }
 input_status;
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Static functions
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
+/**
+ * @brief Reads one coefficient from stdin
+ *
+ * @param input_message The message to print about the coefficient
+ *
+ * @retval The coefficient
+ *
+ * @details If scanf() error occured, asks to enter the coefficient again
+ */
 static double
 ReadOneCoef (const char* const restrict input_message);
 
 
+/**
+ * @brief Prints your equation and asks whether it is correct ot not
+ *
+ * @param a_coef Coefficient before \f$ x^2 \f$
+ * @param b_coef Coefficient before \f$ x \f$
+ * @param c_coef Free coefficient
+ *
+ * @return input_status
+ */
 static input_status
 CheckCoefs (double a_coef,
             double b_coef,
             double c_coef);
 
 
+/**
+ * @brief Prints error message if the equation was not solved
+ *
+ * @details This scenario may occure if you try
+ * to change number of roots manualy
+ */
 static inline void
 PrintNotSolvedError (void);
 
 
+/**
+ * @brief Prints message for no roots case
+ */
 static inline void
 PrintNoRootsCase (void);
 
 
+/**
+ * @brief Prints message for one root case and the root
+ *
+ * @param root The root of the equation
+ */
 static inline void
 PrintOneRootCase (const double root);
 
 
+/**
+ * @brief Prints message for one root case and the roots
+ *
+ * @param root1 The first  root of the equation
+ * @param root2 The second root of the equation
+ */
 static inline void
 PrintTwoRootsCase (const double root1, const double root2);
 
 
+/**
+ * @brief Prints message for infinite number of roots case
+ *
+ * @details Obviously, the function doesn't print roots :)
+ */
 static inline void
 PrintInfRootsCase (void);
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Input and output interface implementation
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 quadratic_equation_coefs*
 ReadCoefs (void)
@@ -135,14 +198,14 @@ PrintRoots (const quadratic_equation* const equation)
     }
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Static functions implementation
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 static double
 ReadOneCoef (const char* const restrict input_message)
@@ -222,5 +285,5 @@ PrintInfRootsCase (void)
     puts (OUTPUT_INF_ROOTS_MESSAGE);
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

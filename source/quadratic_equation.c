@@ -1,10 +1,31 @@
+/**
+ * @file quadratic_equation.c
+ *
+ * @author SeveraTheDuck
+ *
+ * @brief Quadratic equation solver implementation
+ *
+ * @date 2024-06-27
+ *
+ * @copyright GNU GPL v.3
+ *
+ */
+
+
+
 #include "quadratic_equation.h"
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Doubles comparison
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+/**
+ * @brief Tolerance for double comparison
+ */
+static const DOUBLES_CMP_TOLERANCE = DBL_EPSILON;
+
 
 /**
  * @brief Possible results for doubles comparison
@@ -32,14 +53,14 @@ static inline doubles_cmp_status
 CompareDoubles (const double a,
                 const double b);
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Static functions
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 /**
  * @brief Constructor for quardatic_equation structure
@@ -49,11 +70,10 @@ CompareDoubles (const double a,
  *
  * @retval Pointer to quardatic_equation structure
  * @retval NULL if allocation error occurred
- * @retval NULL if bad input  error occurred (NaN coefficients)
  *
  * @details Allocates memory for quardatic_equation structure and
  * initializes its fields with given pointers
- * The function does not copy coefficients structure
+ * The function does not copy coefficients or roots structures
  */
 static quadratic_equation*
 QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
@@ -93,7 +113,7 @@ RootsDestructor (quadratic_equation_roots* const roots);
 
 
 /**
- * @brief The function finds roots of the equation and returns them
+ * @brief The function calculates roots of the equation and returns them
  *
  * @param coefs Coefficients of the equation
  *
@@ -105,7 +125,7 @@ RootsDestructor (quadratic_equation_roots* const roots);
  * Otherwise, calls for SolveLinearCase() function
  */
 static quadratic_equation_roots*
-FindRoots (const quadratic_equation_coefs* const coefs);
+CalculateRoots (const quadratic_equation_coefs* const coefs);
 
 
 /**
@@ -121,8 +141,11 @@ static inline quadratic_equation_roots*
 BothCasesNoRoots (void);
 
 
-//-------------------------------------
-// Quadratic case (a_coef != 0)
+/**************************************
+ * @defgroup QuadraticCase
+ * @brief Quadratic case functions (a != 0)
+ * @{
+ **************************************/
 
 /**
  * @brief Finds the roots of the quadratic equation (a_coef != 0)
@@ -149,6 +172,8 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs);
  * @param coefs Coefficients of the quadratic equation
  *
  * @retval Discriminant value
+ *
+ * @details Formula \f$ D = b^2 - 4 \cdot a \cdot c \f$
  */
 static inline double
 FindDiscriminant (const quadratic_equation_coefs* const coefs);
@@ -181,11 +206,18 @@ QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs);
 static inline quadratic_equation_roots*
 QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
                        const double discriminant);
-//-------------------------------------
+
+/**************************************
+ * @}
+ * End group QuadraticCase
+ **************************************/
 
 
-//-------------------------------------
-// Linear case (a_coef == 0)
+/**************************************
+ * @defgroup QuadraticCase
+ * @brief Linear case functions (a == 0)
+ * @{
+ **************************************/
 
 /**
  * @brief Finds the roots of the linear equation (a_coef != 0)
@@ -198,8 +230,8 @@ QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
  *
  * @details Calls for functions:
  * BothCasesNoRoots()   if b == 0 && c != 0
- * LiearCaseOneRoot()   if b != 0
- * LiearCaseInfRoots()  if b == 0 && c == 0
+ * LinearCaseOneRoot()  if b != 0
+ * LinearCaseInfRoots() if b == 0 && c == 0
  */
 static quadratic_equation_roots*
 SolveLinearCase (const quadratic_equation_coefs* const coefs);
@@ -230,23 +262,27 @@ LinearCaseInfRoots (void);
  */
 static inline quadratic_equation_roots*
 LinearCaseOneRoot (const quadratic_equation_coefs* const coefs);
-//-------------------------------------
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/**************************************
+ * @}
+ * End group LinearCase
+ **************************************/
+
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Interface functions implementation
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 quadratic_equation*
 SolveQuadraticEquation (quadratic_equation_coefs* const coefs)
 {
     if (coefs == NULL) return NULL;
 
-    quadratic_equation_roots* roots = FindRoots (coefs);
+    quadratic_equation_roots* roots = CalculateRoots (coefs);
     if (roots == NULL) return NULL;
 
     quadratic_equation* const equation =
@@ -296,14 +332,14 @@ CoefsDestructor (quadratic_equation_coefs* const coefs)
     return NULL;
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Static functions implementation
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 static quadratic_equation*
 QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
@@ -349,7 +385,7 @@ RootsDestructor (quadratic_equation_roots* const roots)
 
 
 static quadratic_equation_roots*
-FindRoots (const quadratic_equation_coefs* const coefs)
+CalculateRoots (const quadratic_equation_coefs* const coefs)
 {
     if (coefs == NULL) return NULL;
 
@@ -387,6 +423,9 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs)
 
         case DOUBLES_CMP_GREATER:
             return QuadraticCaseTwoRoots (coefs, discriminant);
+
+        case DOUBLES_CMP_UNDEFINED:
+            return NULL;
 
         default:
             return NULL;
@@ -455,14 +494,14 @@ LinearCaseOneRoot (const quadratic_equation_coefs* const coefs)
 }
 //-------------------------------------
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Doubles comparison implementation
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 static inline doubles_cmp_status
 CompareDoubles (const double a,
@@ -470,10 +509,10 @@ CompareDoubles (const double a,
 {
     if (isnan (a) || isnan (b)) return DOUBLES_CMP_UNDEFINED;
 
-    if (a < b - DBL_EPSILON) return DOUBLES_CMP_LESS;
-    if (a > b + DBL_EPSILON) return DOUBLES_CMP_GREATER;
+    if (a < b - DOUBLES_CMP_TOLERANCE) return DOUBLES_CMP_LESS;
+    if (a > b + DOUBLES_CMP_TOLERANCE) return DOUBLES_CMP_GREATER;
     return DOUBLES_CMP_EQUAL;
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
