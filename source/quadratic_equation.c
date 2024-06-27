@@ -50,8 +50,8 @@ doubles_cmp_status;
  * @retval Status @see doubles_cmp_status
  */
 static inline doubles_cmp_status
-CompareDoubles (const double a,
-                const double b);
+CompareDoubles (double a,
+                double b);
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -76,8 +76,8 @@ CompareDoubles (const double a,
  * The function does not copy coefficients or roots structures
  */
 static quadratic_equation*
-QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
-                              quadratic_equation_roots* const roots);
+QuadraticEquationConstructor (quadratic_equation_coefs* coefs,
+                              quadratic_equation_roots* roots);
 
 
 /**
@@ -94,8 +94,8 @@ QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
  * initializes its fields with given roots and number values
  */
 static quadratic_equation_roots*
-RootsConstructor (const double x1_root,
-                  const double x2_root,
+RootsConstructor (double x1_root,
+                  double x2_root,
                   quadratic_equation_roots_number roots_number);
 
 
@@ -109,7 +109,7 @@ RootsConstructor (const double x1_root,
  * @details Frees allocated memory, returns NULL
  */
 static quadratic_equation_roots*
-RootsDestructor (quadratic_equation_roots* const roots);
+RootsDestructor (quadratic_equation_roots* roots);
 
 
 /**
@@ -125,7 +125,7 @@ RootsDestructor (quadratic_equation_roots* const roots);
  * Otherwise, calls for SolveLinearCase() function
  */
 static quadratic_equation_roots*
-CalculateRoots (const quadratic_equation_coefs* const coefs);
+CalculateRoots (const quadratic_equation_coefs* coefs);
 
 
 /**
@@ -163,7 +163,7 @@ BothCasesNoRoots (void);
  * Returns NULL if D is NaN (bad input)
  */
 static quadratic_equation_roots*
-SolveQuadraticCase (const quadratic_equation_coefs* const coefs);
+SolveQuadraticCase (const quadratic_equation_coefs* coefs);
 
 
 /**
@@ -176,7 +176,7 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs);
  * @details Formula \f$ D = b^2 - 4 \cdot a \cdot c \f$
  */
 static inline double
-FindDiscriminant (const quadratic_equation_coefs* const coefs);
+FindDiscriminant (const quadratic_equation_coefs* coefs);
 
 
 /**
@@ -190,7 +190,7 @@ FindDiscriminant (const quadratic_equation_coefs* const coefs);
  * x1 = value, x2 = NaN, roots_number = QUADRATIC_EQUATION_ONE_ROOT
  */
 static inline quadratic_equation_roots*
-QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs);
+QuadraticCaseOneRoot (const quadratic_equation_coefs* coefs);
 
 
 /**
@@ -204,8 +204,8 @@ QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs);
  * x1 = value1, x2 = value2, roots_number = QUADRATIC_EQUATION_TWO_ROOTS
  */
 static inline quadratic_equation_roots*
-QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
-                       const double discriminant);
+QuadraticCaseTwoRoots (const quadratic_equation_coefs* coefs,
+                       double discriminant);
 
 /**************************************
  * @}
@@ -234,7 +234,7 @@ QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
  * LinearCaseInfRoots() if b == 0 && c == 0
  */
 static quadratic_equation_roots*
-SolveLinearCase (const quadratic_equation_coefs* const coefs);
+SolveLinearCase (const quadratic_equation_coefs* coefs);
 
 
 /**
@@ -261,7 +261,7 @@ LinearCaseInfRoots (void);
  * x1 = value, x2 = NaN, roots_number = QUADRATIC_EQUATION_ONE_ROOT
  */
 static inline quadratic_equation_roots*
-LinearCaseOneRoot (const quadratic_equation_coefs* const coefs);
+LinearCaseOneRoot (const quadratic_equation_coefs* coefs);
 
 /**************************************
  * @}
@@ -278,25 +278,20 @@ LinearCaseOneRoot (const quadratic_equation_coefs* const coefs);
 //------------------------------------------------------------------------------
 
 quadratic_equation*
-SolveQuadraticEquation (quadratic_equation_coefs* const coefs)
+SolveQuadraticEquation (quadratic_equation_coefs* coefs)
 {
-    if (coefs == NULL) return NULL;
-
     quadratic_equation_roots* roots = CalculateRoots (coefs);
     if (roots == NULL) return NULL;
 
-    quadratic_equation* const equation =
-        QuadraticEquationConstructor (coefs, roots);
-
-    if (equation == NULL)
-        roots = RootsDestructor (roots);
+    quadratic_equation* equation = QuadraticEquationConstructor (coefs, roots);
+    if (equation == NULL) roots = RootsDestructor (roots);
 
     return equation;
 }
 
 
 quadratic_equation*
-QuadraticEquationDestructor (quadratic_equation* const equation)
+QuadraticEquationDestructor (quadratic_equation* equation)
 {
     if (equation == NULL) return NULL;
 
@@ -309,11 +304,11 @@ QuadraticEquationDestructor (quadratic_equation* const equation)
 
 
 quadratic_equation_coefs*
-CoefsConstructor (const double a_coef,
-                  const double b_coef,
-                  const double c_coef)
+CoefsConstructor (double a_coef,
+                  double b_coef,
+                  double c_coef)
 {
-    quadratic_equation_coefs* const coefs =
+    quadratic_equation_coefs* coefs =
         malloc (sizeof (quadratic_equation_coefs));
     if (coefs == NULL) return NULL;
 
@@ -326,7 +321,7 @@ CoefsConstructor (const double a_coef,
 
 
 quadratic_equation_coefs*
-CoefsDestructor (quadratic_equation_coefs* const coefs)
+CoefsDestructor (quadratic_equation_coefs* coefs)
 {
     free (coefs);
     return NULL;
@@ -342,13 +337,13 @@ CoefsDestructor (quadratic_equation_coefs* const coefs)
 //------------------------------------------------------------------------------
 
 static quadratic_equation*
-QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
-                              quadratic_equation_roots* const roots)
+QuadraticEquationConstructor (quadratic_equation_coefs* coefs,
+                              quadratic_equation_roots* roots)
 {
     if (coefs == NULL ||
         roots == NULL) return NULL;
 
-    quadratic_equation* const equation =
+    quadratic_equation* equation =
         malloc (sizeof (quadratic_equation));
     if (equation == NULL) return NULL;
 
@@ -360,11 +355,11 @@ QuadraticEquationConstructor (quadratic_equation_coefs* const coefs,
 
 
 static quadratic_equation_roots*
-RootsConstructor (const double x1_root,
-                  const double x2_root,
+RootsConstructor (double x1_root,
+                  double x2_root,
                   quadratic_equation_roots_number roots_number)
 {
-    quadratic_equation_roots* const roots =
+    quadratic_equation_roots* roots =
         malloc (sizeof (quadratic_equation_roots));
     if (roots == NULL) return NULL;
 
@@ -377,7 +372,7 @@ RootsConstructor (const double x1_root,
 
 
 static quadratic_equation_roots*
-RootsDestructor (quadratic_equation_roots* const roots)
+RootsDestructor (quadratic_equation_roots* roots)
 {
     free (roots);
     return NULL;
@@ -385,7 +380,7 @@ RootsDestructor (quadratic_equation_roots* const roots)
 
 
 static quadratic_equation_roots*
-CalculateRoots (const quadratic_equation_coefs* const coefs)
+CalculateRoots (const quadratic_equation_coefs* coefs)
 {
     if (coefs == NULL) return NULL;
 
@@ -405,10 +400,11 @@ BothCasesNoRoots (void)
 
 //-------------------------------------
 // Quadratic case
+
 static quadratic_equation_roots*
-SolveQuadraticCase (const quadratic_equation_coefs* const coefs)
+SolveQuadraticCase (const quadratic_equation_coefs* coefs)
 {
-    const double discriminant = FindDiscriminant (coefs);
+    double discriminant = FindDiscriminant (coefs);
 
     doubles_cmp_status discriminant_cmp_status =
         CompareDoubles (discriminant, 0);
@@ -434,35 +430,37 @@ SolveQuadraticCase (const quadratic_equation_coefs* const coefs)
 
 
 static inline double
-FindDiscriminant (const quadratic_equation_coefs* const coefs)
+FindDiscriminant (const quadratic_equation_coefs* coefs)
 {
     return coefs->b * coefs->b - 4 * coefs->a * coefs->c;
 }
 
 
 static inline quadratic_equation_roots*
-QuadraticCaseOneRoot (const quadratic_equation_coefs* const coefs)
+QuadraticCaseOneRoot (const quadratic_equation_coefs* coefs)
 {
-    const double x1_root = -coefs->b / 2 / coefs->a;
+    double x1_root = -coefs->b / 2 / coefs->a;
     return RootsConstructor (x1_root, NAN, QUADRATIC_EQUATION_ONE_ROOT);
 }
 
 
 static inline quadratic_equation_roots*
-QuadraticCaseTwoRoots (const quadratic_equation_coefs* const coefs,
-                       const double discriminant)
+QuadraticCaseTwoRoots (const quadratic_equation_coefs* coefs,
+                       double discriminant)
 {
     const double x1_root = (-coefs->b - sqrt (discriminant)) / 2 / coefs->a;
     const double x2_root = (-coefs->b + sqrt (discriminant)) / 2 / coefs->a;
     return RootsConstructor (x1_root, x2_root, QUADRATIC_EQUATION_TWO_ROOTS);
 }
+
 //-------------------------------------
 
 
 //-------------------------------------
 // Linear case
+
 static quadratic_equation_roots*
-SolveLinearCase (const quadratic_equation_coefs* const coefs)
+SolveLinearCase (const quadratic_equation_coefs* coefs)
 {
     doubles_cmp_status b_cmp_status = CompareDoubles (coefs->b, 0);
     doubles_cmp_status c_cmp_status = CompareDoubles (coefs->c, 0);
@@ -487,9 +485,9 @@ LinearCaseInfRoots (void)
 
 
 static inline quadratic_equation_roots*
-LinearCaseOneRoot (const quadratic_equation_coefs* const coefs)
+LinearCaseOneRoot (const quadratic_equation_coefs* coefs)
 {
-    const double x1_root = -coefs->c / coefs->b;
+    double x1_root = -coefs->c / coefs->b;
     return RootsConstructor (x1_root, NAN, QUADRATIC_EQUATION_ONE_ROOT);
 }
 //-------------------------------------
@@ -504,8 +502,8 @@ LinearCaseOneRoot (const quadratic_equation_coefs* const coefs)
 //------------------------------------------------------------------------------
 
 static inline doubles_cmp_status
-CompareDoubles (const double a,
-                const double b)
+CompareDoubles (double a,
+                double b)
 {
     if (isnan (a) || isnan (b)) return DOUBLES_CMP_UNDEFINED;
 
