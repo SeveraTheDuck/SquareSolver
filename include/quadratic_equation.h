@@ -119,6 +119,25 @@ SolveQuadraticEquation (quadratic_equation_coefs* coefs);
  * @retval NULL
  *
  * @details Destroys the equation, its coefficients and roots structures
+ *
+ * @note This function frees the memory allocated for coefficient structure
+ */
+quadratic_equation*
+EndSolver (quadratic_equation* equation);
+
+
+/**
+ * @brief Destructor for the equation structure and its roots
+ *
+ * @param equation
+ *
+ * @retval NULL
+ *
+ * @details Destroys the equation and roots structures
+ *
+ * @note This function DOES NOT destroy equation coefficients
+ * You should free the memory allocated for the coefficients, calling
+ * for CoefsDestructor() function
  */
 quadratic_equation*
 QuadraticEquationDestructor (quadratic_equation* equation);

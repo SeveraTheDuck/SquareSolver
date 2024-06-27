@@ -291,11 +291,21 @@ SolveQuadraticEquation (quadratic_equation_coefs* coefs)
 
 
 quadratic_equation*
-QuadraticEquationDestructor (quadratic_equation* equation)
+EndSolver (quadratic_equation* equation)
 {
     if (equation == NULL) return NULL;
 
     equation->coefs = CoefsDestructor (equation->coefs);
+
+    return QuadraticEquationDestructor (equation);
+}
+
+
+quadratic_equation*
+QuadraticEquationDestructor (quadratic_equation* equation)
+{
+    if (equation == NULL) return NULL;
+
     equation->roots = RootsDestructor (equation->roots);
 
     free (equation);
