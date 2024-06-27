@@ -24,7 +24,7 @@
 /**
  * @brief Tolerance for double comparison
  */
-static const DOUBLES_CMP_TOLERANCE = DBL_EPSILON;
+static const double DOUBLES_CMP_TOLERANCE = DBL_EPSILON;
 
 
 /**
