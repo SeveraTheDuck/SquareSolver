@@ -53,7 +53,7 @@ ReadCoefs (void);
  * If the equation was not solved, prints error message
  */
 void
-PrintRoots (const quadratic_equation* const equation);
+PrintRoots (const quadratic_equation* equation);
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

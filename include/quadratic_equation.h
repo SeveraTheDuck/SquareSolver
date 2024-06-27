@@ -108,7 +108,7 @@ quadratic_equation;
  * 3. No roots or infinite number           => both roots are set NaN
  */
 quadratic_equation*
-SolveQuadraticEquation (quadratic_equation_coefs* const coefs);
+SolveQuadraticEquation (quadratic_equation_coefs* coefs);
 
 
 /**
@@ -121,7 +121,7 @@ SolveQuadraticEquation (quadratic_equation_coefs* const coefs);
  * @details Destroys the equation, its coefficients and roots structures
  */
 quadratic_equation*
-QuadraticEquationDestructor (quadratic_equation* const equation);
+QuadraticEquationDestructor (quadratic_equation* equation);
 
 
 /**
@@ -138,9 +138,9 @@ QuadraticEquationDestructor (quadratic_equation* const equation);
  * with given values
  */
 quadratic_equation_coefs*
-CoefsConstructor (const double a_coef,
-                  const double b_coef,
-                  const double c_coef);
+CoefsConstructor (double a_coef,
+                  double b_coef,
+                  double c_coef);
 
 
 /**
@@ -153,7 +153,7 @@ CoefsConstructor (const double a_coef,
  * @details Frees memory
  */
 quadratic_equation_coefs*
-CoefsDestructor (quadratic_equation_coefs* const coefs);
+CoefsDestructor (quadratic_equation_coefs* coefs);
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

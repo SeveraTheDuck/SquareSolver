@@ -70,7 +70,7 @@ input_status;
  * @details If scanf() error occured, asks to enter the coefficient again
  */
 static double
-ReadOneCoef (const char* const restrict input_message);
+ReadOneCoef (const char* input_message);
 
 
 /**
@@ -111,7 +111,7 @@ PrintNoRootsCase (void);
  * @param root The root of the equation
  */
 static inline void
-PrintOneRootCase (const double root);
+PrintOneRootCase (double root);
 
 
 /**
@@ -121,7 +121,8 @@ PrintOneRootCase (const double root);
  * @param root2 The second root of the equation
  */
 static inline void
-PrintTwoRootsCase (const double root1, const double root2);
+PrintTwoRootsCase (double root1,
+                   double root2);
 
 
 /**
@@ -167,11 +168,11 @@ ReadCoefs (void)
 
 
 void
-PrintRoots (const quadratic_equation* const equation)
+PrintRoots (const quadratic_equation* equation)
 {
     if (equation == NULL) return;
 
-    const quadratic_equation_roots* const roots = equation->roots;
+    const quadratic_equation_roots* roots = equation->roots;
     if (roots == NULL) return;
 
     switch (roots->roots_number)
@@ -193,6 +194,11 @@ PrintRoots (const quadratic_equation* const equation)
             break;
 
         case QUADRATIC_EQUATION_NOT_SOLVED:
+        #if __STDC_VERSION__ >= 202300L
+            [[fallthrough]];
+        #endif
+
+        default:
             PrintNotSolvedError ();
             break;
     }
@@ -208,14 +214,14 @@ PrintRoots (const quadratic_equation* const equation)
 //------------------------------------------------------------------------------
 
 static double
-ReadOneCoef (const char* const restrict input_message)
+ReadOneCoef (const char* input_message)
 {
     input_status status = BAD_INPUT;
     double coef = 0.0;
 
     while (status == BAD_INPUT)
     {
-        input_message != NULL && puts (input_message);
+        if (input_message != NULL) puts (input_message);
 
         if (scanf ("%lf", &coef) == 1) status = SUCCESS;
         else puts (BAD_INPUT_MESSAGE);
@@ -261,7 +267,7 @@ PrintNoRootsCase (void)
 
 
 static inline void
-PrintOneRootCase (const double root)
+PrintOneRootCase (double root)
 {
     printf ("%s 1\n%s %lf\n",
         OUTPUT_ROOTS_NUMBER_MESSAGE, OUTPUT_ONLY_ROOT_MESSAGE, root);
@@ -269,7 +275,8 @@ PrintOneRootCase (const double root)
 
 
 static inline void
-PrintTwoRootsCase (const double root1, const double root2)
+PrintTwoRootsCase (double root1,
+                   double root2)
 {
     printf ("%s 2\n%s %lf\n%s %lf\n",
         OUTPUT_ROOTS_NUMBER_MESSAGE,
